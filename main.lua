@@ -37,7 +37,8 @@ end
 
 
 
-local layer = require("examples.island")
+-- local layer = require("examples.cave")
+local layer = require("examples.tunnel")
 
 local layerVals = evalLayer(layer)
 
@@ -57,6 +58,8 @@ function love.draw()
 end
 
 
-function love.keypressed()
+function love.keypressed(k)
+    if k == "r" then
     love.event.quit("restart")
+    end
 end

@@ -100,7 +100,7 @@ function Layer:add(other)
             return val + other
         end)
     else
-        return self:combine(other, mult)
+        return self:combine(other, add)
     end
 end
 
