@@ -58,6 +58,73 @@ function Layer:apply(func)
 end
 
 
+local function mult(a,b)
+    return a*b
+end
+local function add(a,b)
+    return a+b
+end
+
+local function min(a,b)
+    -- we can't do `local min=math.min` here,
+    --  because math.min takes more than 2 arguments;
+    -- and (x,y) are passed to `:evaluate`.  
+    -- womp womp!
+    return math.min(a,b)
+end
+
+local function max(a,b)
+    return math.max(a,b)
+end
+
+
+
+local function isNumber(x)
+    return type(x) == "number"
+end
+
+
+function Layer:multiply(other)
+    if isNumber(other) then
+        return self:apply(function(val)
+            return val * other
+        end)
+    else
+        return self:combine(other, mult)
+    end
+end
+
+function Layer:add(other)
+    if isNumber(other) then
+        return self:apply(function(val)
+            return val + other
+        end)
+    else
+        return self:combine(other, mult)
+    end
+end
+
+function Layer:min(other)
+    if isNumber(other) then
+        return self:apply(function(val)
+            return math.min(val, other)
+        end)
+    else
+        return self:combine(other, min)
+    end
+end
+
+function Layer:max(other)
+    if isNumber(other) then
+        return self:apply(function(val)
+            return math.max(val, other)
+        end)
+    else
+        return self:combine(other, max)
+    end
+end
+
+
 
 
 return newLayer
