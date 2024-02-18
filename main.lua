@@ -6,7 +6,7 @@ local lg=love.graphics
 lg.setDefaultFilter("nearest", "nearest")
 
 
-local MAP_SIZE = 200
+local MAP_SIZE = 800
 local SCREEN_SIZE = 600
 
 local SCALE = SCREEN_SIZE / MAP_SIZE

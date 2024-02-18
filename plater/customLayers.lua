@@ -53,9 +53,9 @@ function customLayers.Cutoff(radius)
         x = x - 0.5
         y = y - 0.5
         if radiusSquared > (x*x + y*y) then
-            return 0
+            return 1
         end
-        return 1
+        return 0
     end)
 end
 
