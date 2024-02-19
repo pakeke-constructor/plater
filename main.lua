@@ -1,4 +1,7 @@
 
+
+math.randomseed(os.clock())
+
 _G.plater = require("plater.plater")
 
 

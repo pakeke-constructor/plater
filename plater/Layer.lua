@@ -10,8 +10,24 @@ local function ret0(_x, _y)
 end
 
 
-function newLayer(evaluationFunction)
+function newLayer(evaluationFunction, seed)
     local self = setmetatable({}, Layer_mt)
+
+    self.seed = seed or {
+        -- seed = x/y offsets for generation.
+        -- If not specified, randomly generate.
+        x = math.random(1000) + math.random(),
+        y = math.random(1000) + math.random()
+    } --[[
+        TODO: Do some thinking about how seeding in this should work.
+        We should ideally be able to change the seed for any layer,
+        and have it just "work".
+
+        Also, the noise should ideally be completely continuous,
+        regardless of how the layers were layed out.
+
+        Will almost definitely require refactor to customLayers.SimplexLayer
+    ]]
 
     self.view = {x=0,y=0, w=1,h=1}
     self.evaluationFunction = evaluationFunction or ret0
@@ -22,7 +38,7 @@ end
 
 
 function Layer:apply(func)
-    return newLayer(func)
+    return newLayer(func, self.seed)
 end
 
 
@@ -43,7 +59,7 @@ function Layer:combine(otherLayer, func)
         return func(val1,val2, x,y)
     end
 
-    local ret = newLayer(eval)
+    local ret = newLayer(eval, self.seed)
     ret.view = self.view
     return ret
 end
@@ -54,7 +70,7 @@ function Layer:apply(func)
         local val1 = self:evaluate(x,y)
         return func(val1, x,y)
     end
-    return newLayer(eval)
+    return newLayer(eval, self.seed)
 end
 
 

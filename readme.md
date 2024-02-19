@@ -40,5 +40,13 @@ return simplex:multiply(warp):multiply(simplex2)
 <br/>
 <br/>
 
+# Terraced world:
+![](images/TERRACED_WORLD.png)
+
+
+<br/>
+<br/>
+
 # Cave tunnel:
 ![](images/TUNNEL_1.png)
+
