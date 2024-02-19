@@ -36,9 +36,10 @@ end
 
 
 
+--local layer = require("examples.cave")
+-- local layer = require("examples.tunnel")
+local layer = require("examples.terraces")
 
--- local layer = require("examples.cave")
-local layer = require("examples.tunnel")
 
 local layerVals = evalLayer(layer)
 

@@ -11,7 +11,12 @@ local simplex2 = plater.SimplexLayer(7)
     :add(0.21)
     :multiply(2)
 
+local roughy = plater.SimplexLayer(63)
+    :multiply(0.2)
+    :add(-0.1)
+
 return simplex
+    :add(roughy)
     :multiply(warp)
     :multiply(simplex2)
     :apply(function(x)

@@ -39,7 +39,6 @@ return simplex:multiply(warp):multiply(simplex2)
 
 <br/>
 <br/>
-<br/>
 
 # Cave tunnel:
 ![](images/TUNNEL_1.png)
