@@ -10,7 +10,7 @@ local function ret0(_x, _y)
 end
 
 
-function newLayer(evaluationFunction, seed)
+local function newLayer(evaluationFunction, seed)
     local self = setmetatable({}, Layer_mt)
 
     self.seed = seed or {
@@ -33,12 +33,6 @@ function newLayer(evaluationFunction, seed)
     self.evaluationFunction = evaluationFunction or ret0
 
     return self
-end
-
-
-
-function Layer:apply(func)
-    return newLayer(func, self.seed)
 end
 
 
