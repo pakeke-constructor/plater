@@ -1,7 +1,9 @@
 
 local warp = plater.Layer(function(x,y)
     return 0.1 - math.abs(0.5-y)
-end):multiply(3)
+end)
+:multiply(3)
+:offset(0, -0.2)
 
 
 local simplex = plater.SimplexLayer(23)

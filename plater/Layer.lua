@@ -4,9 +4,13 @@
 ---@field y number
 local Layer_Seed = {}
 
+---@alias Layer.Eval fun(x:number,y:number):number
 
 ---@class Layer
 ---@field seed Layer.Seed
+---@field eval Layer.Eval
+---@field ox number offset X
+---@field oy number offset Y
 local Layer = {}
 
 local Layer_mt = {__index = Layer}
@@ -18,10 +22,12 @@ local function ret0(_x, _y)
 end
 
 
----@param evaluationFunction fun(x:number,y:number):number
+---@param evaluationFunction Layer.Eval
 ---@param seed? {x:number, y:number}
+---@param ox? number
+---@param oy? number
 ---@return Layer
-local function newLayer(evaluationFunction, seed)
+local function newLayer(evaluationFunction, seed, ox,oy)
     local self = setmetatable({}, Layer_mt)
 
     self.seed = seed or {
@@ -39,9 +45,10 @@ local function newLayer(evaluationFunction, seed)
 
         Will almost definitely require refactor to customLayers.SimplexLayer
     ]]
+    self.ox = ox or 0
+    self.oy = oy or 0
 
-    self.view = {x=0,y=0, w=1,h=1}
-    self.evaluationFunction = evaluationFunction or ret0
+    self.eval = evaluationFunction or ret0
 
     return self
 end
@@ -49,11 +56,9 @@ end
 
 
 function Layer:evaluate(x,y)
-    local v = self.view
-    -- normalize (x,y) to [0,1] range
-    local passX = (x-v.x)/v.w
-    local passY = (y-v.y)/v.h
-    return self.evaluationFunction(passX, passY)
+    local passX = x-self.ox
+    local passY = y-self.oy
+    return self.eval(passX, passY)
 end
 
 
@@ -65,7 +70,6 @@ function Layer:combine(otherLayer, func)
     end
 
     local ret = newLayer(eval, self.seed)
-    ret.view = self.view
     return ret
 end
 
@@ -77,6 +81,18 @@ function Layer:apply(func)
     end
     return newLayer(eval, self.seed)
 end
+
+
+
+---@param ox number
+---@param oy number
+function Layer:offset(ox,oy)
+    assert(ox and oy)
+    return newLayer(self.eval, self.seed, ox,oy)
+end
+
+
+
 
 
 local function mult(a,b)
