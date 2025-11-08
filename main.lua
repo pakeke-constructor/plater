@@ -40,7 +40,7 @@ end
 
 
 -- local layer = require("examples.cave")
--- local layer = require("examples.tunnel")
+local layer = require("examples.tunnel")
 -- local layer = require("examples.terraces")
 
 

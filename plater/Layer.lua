@@ -1,6 +1,14 @@
 
+---@class Layer.Seed
+---@field x number
+---@field y number
+local Layer_Seed = {}
 
+
+---@class Layer
+---@field seed Layer.Seed
 local Layer = {}
+
 local Layer_mt = {__index = Layer}
 
 
@@ -10,14 +18,17 @@ local function ret0(_x, _y)
 end
 
 
+---@param evaluationFunction fun(x:number,y:number):number
+---@param seed? {x:number, y:number}
+---@return Layer
 local function newLayer(evaluationFunction, seed)
     local self = setmetatable({}, Layer_mt)
 
     self.seed = seed or {
         -- seed = x/y offsets for generation.
         -- If not specified, randomly generate.
-        x = math.random(1000) + math.random(),
-        y = math.random(1000) + math.random()
+        x = math.random(-4000, 4000) + math.random(),
+        y = math.random(-4000, 4000) + math.random()
     } --[[
         TODO: Do some thinking about how seeding in this should work.
         We should ideally be able to change the seed for any layer,
