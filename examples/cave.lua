@@ -2,6 +2,7 @@
 
 local falloff = plater.Falloff(0.45)
     :multiply(2)
+    :offset(0.5,0.5)
 
 local simplex = plater.SimplexLayer(13)
     :add(0.1)

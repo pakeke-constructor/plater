@@ -39,8 +39,6 @@ function customLayers.Falloff(radius)
     radius = radius or 0.5
     local radiusSquared = radius * radius
     return Layer(function(x,y)
-        x = x - 0.5
-        y = y - 0.5
         return max(radiusSquared - (x*x + y*y), 0)
     end)
 end
@@ -50,8 +48,6 @@ function customLayers.Cutoff(radius)
     radius = radius or 0.5
     local radiusSquared = radius * radius
     return Layer(function(x,y)
-        x = x - 0.5
-        y = y - 0.5
         if radiusSquared > (x*x + y*y) then
             return 1
         end
