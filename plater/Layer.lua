@@ -55,6 +55,9 @@ end
 
 
 
+---@param x number
+---@param y number
+---@return number
 function Layer:evaluate(x,y)
     local passX = x-self.ox
     local passY = y-self.oy
@@ -62,6 +65,9 @@ function Layer:evaluate(x,y)
 end
 
 
+---@param otherLayer Layer
+---@param func fun(val1:number, val2:number, x:number,y:number)
+---@return Layer
 function Layer:combine(otherLayer, func)
     local function eval(x,y)
         local val1 = self:evaluate(x,y)
@@ -74,6 +80,8 @@ function Layer:combine(otherLayer, func)
 end
 
 
+---@param func fun(val:number, x:number,y:number): number
+---@return Layer
 function Layer:apply(func)
     local function eval(x,y)
         local val1 = self:evaluate(x,y)
@@ -116,13 +124,11 @@ end
 
 
 
-local function isNumber(x)
-    return type(x) == "number"
-end
 
-
+---@param other number|Layer
+---@return Layer
 function Layer:multiply(other)
-    if isNumber(other) then
+    if type(other) == "number" then
         return self:apply(function(val)
             return val * other
         end)
@@ -131,8 +137,10 @@ function Layer:multiply(other)
     end
 end
 
+---@param other number|Layer
+---@return Layer
 function Layer:add(other)
-    if isNumber(other) then
+    if type(other) == "number" then
         return self:apply(function(val)
             return val + other
         end)
@@ -141,8 +149,11 @@ function Layer:add(other)
     end
 end
 
+
+---@param other number|Layer
+---@return Layer
 function Layer:min(other)
-    if isNumber(other) then
+    if type(other) == "number" then
         return self:apply(function(val)
             return math.min(val, other)
         end)
@@ -151,8 +162,10 @@ function Layer:min(other)
     end
 end
 
+---@param other number|Layer
+---@return Layer
 function Layer:max(other)
-    if isNumber(other) then
+    if type(other) == "number" then
         return self:apply(function(val)
             return math.max(val, other)
         end)
