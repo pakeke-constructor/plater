@@ -33,8 +33,8 @@ local function newLayer(evaluationFunction, seed, ox,oy)
     self.seed = seed or {
         -- seed = x/y offsets for generation.
         -- If not specified, randomly generate.
-        x = math.random(-4000, 4000) + math.random(),
-        y = math.random(-4000, 4000) + math.random()
+        x = math.random(-1000, 1000) + math.random(),
+        y = math.random(-1000, 1000) + math.random()
     } --[[
         TODO: Do some thinking about how seeding in this should work.
         We should ideally be able to change the seed for any layer,
@@ -45,8 +45,8 @@ local function newLayer(evaluationFunction, seed, ox,oy)
 
         Will almost definitely require refactor to customLayers.SimplexLayer
     ]]
-    self.ox = ox or 0
-    self.oy = oy or 0
+    self.ox = (ox or 0) + self.seed.x
+    self.oy = (oy or 0) + self.seed.y
 
     self.eval = evaluationFunction or ret0
 
